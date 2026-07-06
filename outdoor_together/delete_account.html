@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account & Data Deletion — Outdoor Together</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            position: relative;
+        }
+        .lang-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .lang-switch select {
+            padding: 6px 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+        }
+        h2 {
+            margin-top: 0;
+            color: #1a1a1a;
+            font-size: 24px;
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 10px;
+        }
+        p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .checkbox-group input {
+            margin-top: 3px;
+        }
+        .checkbox-group label {
+            font-size: 13px;
+            color: #444;
+            cursor: pointer;
+        }
+        button {
+            width: 100%;
+            background-color: #df4759;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #cb3244;
+        }
+        .footer {
+            margin-top: 25px;
+            font-size: 11px;
+            color: #999;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="lang-switch">
+    <select id="langSelect" onchange="changeLanguage()">
+        <option value="en">English</option>
+        <option value="it">Italiano</option>
+    </select>
+</div>
+
+<div class="container">
+    <h2 id="txt-title">Account & Data Deletion</h2>
+    <p id="txt-desc">Enter your account email and confirm the request. Clicking the button will open your email client to send the request directly to the developer.</p>
+
+    <div class="form-group">
+        <label id="txt-label-email" for="email">Account Email Address:</label>
+        <input type="email" id="email" placeholder="example@email.com" required>
+    </div>
+
+    <div class="checkbox-group">
+        <input type="checkbox" id="confirm" required>
+        <label id="txt-label-confirm" for="confirm">I confirm that I want to permanently delete my account and all registered data. This action is irreversible.</label>
+    </div>
+
+    <button type="button" id="txt-btn" onclick="inviaEmail()">Send Request via Email</button>
+
+    <div class="footer" id="txt-footer">
+        Requests are processed manually within 48 hours of receipt.
+    </div>
+</div>
+
+<script>
+const translations = {
+    en: {
+        title: "Account & Data Deletion",
+        desc: "Enter your account email and confirm the request. Clicking the button will open your email client to send the request directly to the developer.",
+        labelEmail: "Account Email Address:",
+        labelConfirm: "I confirm that I want to permanently delete my account and all registered data. This action is irreversible.",
+        btn: "Send Request via Email",
+        footer: "Requests are processed manually within 48 hours of receipt.",
+        alertEmail: "Please enter your account email address.",
+        alertConfirm: "You must confirm the request by checking the box.",
+        emailSubject: "Outdoor Together — Account Data Deletion Request",
+        emailBody: "I request the permanent deletion of my account and all associated data.\n\nAccount email to remove: "
+    },
+    it: {
+        title: "Eliminazione Account & Dati",
+        desc: "Inserisci l'email del tuo account e conferma la richiesta. Cliccando sul pulsante si aprirà il tuo client di posta per inviare la richiesta direttamente allo sviluppatore.",
+        labelEmail: "Indirizzo Email dell'account:",
+        labelConfirm: "Confermo di voler eliminare definitivamente il mio account e tutti i dati registrati. Questa azione è irreversibile.",
+        btn: "Invia Richiesta via Email",
+        footer: "Le richieste vengono elaborate manualmente entro 48 ore dalla ricezione.",
+        alertEmail: "Per favore, inserisci l'indirizzo email del tuo account.",
+        alertConfirm: "È necessario confermare la presa visione spuntando la casella.",
+        emailSubject: "Outdoor Together — Richiesta Cancellazione Dati App",
+        emailBody: "Richiedo la cancellazione definitiva del mio account e di tutti i dati associati.\n\nEmail dell'account da rimuovere: "
+    }
+};
+
+let currentLang = 'en';
+
+function changeLanguage() {
+    currentLang = document.getElementById('langSelect').value;
+    const t = translations[currentLang];
+
+    document.getElementById('txt-title').innerText = t.title;
+    document.getElementById('txt-desc').innerText = t.desc;
+    document.getElementById('txt-label-email').innerText = t.labelEmail;
+    document.getElementById('txt-label-confirm').innerText = t.labelConfirm;
+    document.getElementById('txt-btn').innerText = t.btn;
+    document.getElementById('txt-footer').innerText = t.footer;
+    document.documentElement.lang = currentLang;
+}
+
+function inviaEmail() {
+    const emailUtente = document.getElementById('email').value;
+    const confermato = document.getElementById('confirm').checked;
+    const t = translations[currentLang];
+
+    if (!emailUtente) {
+        alert(t.alertEmail);
+        return;
+    }
+    if (!confermato) {
+        alert(t.alertConfirm);
+        return;
+    }
+
+    const destinatario = "dev.whiterice@gmail.com";
+    const oggetto = encodeURIComponent(t.emailSubject);
+    const corpo = encodeURIComponent(t.emailBody + emailUtente + "\n\n" + (currentLang === 'en' ? "I confirm that this action is irreversible." : "Confermo che l'azione è irreversibile."));
+
+    window.location.href = "mailto:" + destinatario + "?subject=" + oggetto + "&body=" + corpo;
+}
+</script>
+
+</body>
+</html>
