@@ -21,7 +21,7 @@
 <strong>Developer:</strong> White Rice &middot;
 <strong>Platform:</strong> Wear OS &middot;
 <strong>Package:</strong> it.whiterice.abcwatch<br>
-<strong>Last updated:</strong> 29 July 2026</p>
+<strong>Last updated:</strong> 31 July 2026</p>
 
 <p><strong>ABC Watch</strong> ("the App") is an altimeter, barometer and compass for Wear OS
 smartwatches. This policy explains what the App does with your data. The short version:
@@ -43,16 +43,30 @@ anything, to us or to anyone else.</p>
       sensors. A sample is stored locally roughly every 15 minutes so the App can draw its history
       charts. Samples older than <strong>48 hours are deleted automatically</strong>.</li>
   <li><strong>Location:</strong> the App requests precise and approximate location and reads it
-      <em>only while you are using the App</em>, in the foreground, to calibrate the altimeter and
-      to convert magnetic north into true north. Your coordinates are used for that calculation and
-      then discarded: they are <strong>never stored</strong> in the App's database and
-      <strong>never transmitted</strong>. The App does <strong>not</strong> collect location in the
-      background — the periodic sampling never turns the GPS on.</li>
-  <li><strong>Your settings:</strong> unit of measurement and chart time window, stored in a local
-      file on the watch.</li>
+      <em>only while you are using the App</em>, in the foreground, to calibrate the altimeter, to
+      convert magnetic north into true north, and to compute sunrise, sunset, twilight and moon
+      times. It does <strong>not</strong> request background location, so Android does not let it
+      read your position while it is not in use, and the periodic sampling never turns the GPS on.
+      <br>The <strong>last known position</strong> — latitude, longitude and the time of the fix —
+      is saved in a local file on the watch, so that those calculations still work the moment you
+      open the App and so that the Sun and Moon tiles can show something at all. It stays on the
+      watch and is <strong>never transmitted</strong>. Nothing else about your location is kept: the
+      App has no location history and does not record where you have been.</li>
+  <li><strong>Activity:</strong> the App reads your current activity state — still, walking,
+      running, cycling, in a vehicle — from Google Play Services, which determines it on your watch.
+      It is used for one purpose: telling whether a change in pressure means you have changed
+      altitude or the weather has changed, which is what stops the App from raising a false storm
+      warning every time you walk uphill. Only the moments at which the state changed are kept, in a
+      local file, and only for the <strong>last 4 hours</strong>; older ones are discarded. They are
+      <strong>never transmitted</strong>.</li>
+  <li><strong>Your settings:</strong> units of measurement, chart time window, pressure mode,
+      barometric alert threshold, and the altimeter reference you may have set by hand, stored in
+      local files on the watch.</li>
 </ul>
 <p>If you deny the location permission, the App keeps working: the altimeter falls back to the
-standard atmosphere and the compass shows magnetic north, and it says so on screen in both cases.</p>
+standard atmosphere, the compass shows magnetic north, and sunrise and sunset are reported as
+unavailable — it says so on screen in each case. If you deny the activity permission, the App keeps
+working too: it simply distinguishes altitude from weather less often.</p>
 
 <h2>4. Storage and sharing</h2>
 <p>All of the above is stored <strong>on the watch only</strong>, in the App's private storage.
@@ -61,16 +75,23 @@ and device-to-device transfer are <strong>disabled</strong> for this App, so its
 your watch even through the operating system's own copy features.</p>
 
 <h2>5. Third-party services</h2>
-<p><strong>None</strong> that receive your data. The App uses Google Play Services' location
-component, which runs on your device to provide the GPS fix; it is not used to send data anywhere.
-The magnetic declination is computed offline, from a model built into Android.</p>
+<p><strong>None</strong> that receive your data. The App uses two components of Google Play Services
+— location, for the GPS fix, and activity recognition — and both run on your watch. Neither is used
+to send data anywhere. The magnetic declination, and the sunrise, sunset and moon calculations, are
+computed offline from models built into the App and into Android.</p>
 
 <h2>6. Permissions</h2>
 <ul>
   <li><code>ACCESS_FINE_LOCATION</code> and <code>ACCESS_COARSE_LOCATION</code> — altimeter
-      calibration and true-north compass, in the foreground only. Android requires both to be
-      requested together.</li>
+      calibration, true-north compass, and sun and moon times; in the foreground only. Android
+      requires both to be requested together.</li>
+  <li><code>ACTIVITY_RECOGNITION</code> — telling apart a change of altitude from a change in the
+      weather, so the barometric alert does not fire every time you walk uphill.</li>
+  <li><code>POST_NOTIFICATIONS</code> — only for the barometric alert, which is off by default. If
+      you never turn it on, this permission is never requested.</li>
 </ul>
+<p>The App does <strong>not</strong> request <code>ACCESS_BACKGROUND_LOCATION</code>, and does not
+request <code>INTERNET</code>.</p>
 <p>The pressure, magnetic and accelerometer sensors require no permission and are read directly.</p>
 
 <h2>7. Your rights and data deletion</h2>
@@ -99,7 +120,7 @@ diving or any activity where an error could cause harm.</p>
 <strong>Sviluppatore:</strong> White Rice &middot;
 <strong>Piattaforma:</strong> Wear OS &middot;
 <strong>Package:</strong> it.whiterice.abcwatch<br>
-<strong>Ultimo aggiornamento:</strong> 29 luglio 2026</p>
+<strong>Ultimo aggiornamento:</strong> 31 luglio 2026</p>
 
 <p><strong>ABC Watch</strong> ("l'App") è un altimetro, barometro e bussola per smartwatch Wear OS.
 Questa informativa descrive cosa l'App fa dei tuoi dati. In breve: <strong>l'App non raccoglie nulla
@@ -122,17 +143,31 @@ tecnicamente incapace di trasmettere alcunché, né a noi né ad altri.</p>
       i grafici storici. I campioni più vecchi di <strong>48 ore vengono eliminati
       automaticamente</strong>.</li>
   <li><strong>Posizione:</strong> l'App richiede la posizione precisa e approssimativa e la legge
-      <em>solo mentre la stai usando</em>, in primo piano, per calibrare l'altimetro e per
-      convertire il nord magnetico in nord geografico. Le coordinate servono a quel calcolo e
-      vengono poi scartate: <strong>non vengono mai salvate</strong> nel database dell'App e
-      <strong>non vengono mai trasmesse</strong>. L'App <strong>non</strong> raccoglie la posizione
-      in background — il campionamento periodico non accende mai il GPS.</li>
-  <li><strong>Le tue impostazioni:</strong> unità di misura e finestra temporale dei grafici,
-      salvate in un file locale sull'orologio.</li>
+      <em>solo mentre la stai usando</em>, in primo piano, per calibrare l'altimetro, per convertire
+      il nord magnetico in nord geografico e per calcolare gli orari di alba, tramonto, crepuscoli e
+      luna. <strong>Non</strong> richiede la posizione in background, quindi Android non le consente
+      di leggere dove ti trovi mentre non la stai usando, e il campionamento periodico non accende
+      mai il GPS.
+      <br>L'<strong>ultima posizione nota</strong> — latitudine, longitudine e ora del rilevamento —
+      viene salvata in un file locale sull'orologio, perché quei calcoli funzionino già nel momento
+      in cui apri l'App e perché i Tile del Sole e della Luna possano mostrare qualcosa. Resta
+      sull'orologio e <strong>non viene mai trasmessa</strong>. Nient'altro della tua posizione viene
+      conservato: l'App non tiene uno storico degli spostamenti e non registra dove sei stato.</li>
+  <li><strong>Attività:</strong> l'App legge il tuo stato di movimento — fermo, a piedi, di corsa, in
+      bicicletta, in veicolo — da Google Play Services, che lo determina sull'orologio. Serve a una
+      cosa sola: capire se una variazione di pressione significa che è cambiata la tua quota o che è
+      cambiato il tempo, ed è ciò che impedisce all'App di dare un falso allarme temporale ogni volta
+      che sali in salita. Si conservano solo gli istanti in cui lo stato è cambiato, in un file
+      locale, e solo per le <strong>ultime 4 ore</strong>; i più vecchi vengono scartati. <strong>Non
+      vengono mai trasmessi</strong>.</li>
+  <li><strong>Le tue impostazioni:</strong> unità di misura, finestra temporale dei grafici, modalità
+      della pressione, soglia dell'allerta barometrica e l'eventuale taratura dell'altimetro che hai
+      inserito a mano, salvate in file locali sull'orologio.</li>
 </ul>
 <p>Se neghi il permesso di posizione l'App continua a funzionare: l'altimetro ripiega
-sull'atmosfera standard e la bussola mostra il nord magnetico, dichiarandolo a schermo in entrambi
-i casi.</p>
+sull'atmosfera standard, la bussola mostra il nord magnetico e alba e tramonto si dichiarano non
+disponibili — in ogni caso dicendolo a schermo. Anche negando il permesso di attività l'App continua
+a funzionare: distingue semplicemente la quota dal meteo meno spesso.</p>
 
 <h2>4. Conservazione e condivisione</h2>
 <p>Tutto quanto sopra è conservato <strong>solo sull'orologio</strong>, nell'archivio privato
@@ -142,17 +177,24 @@ per questa App: i suoi dati non lasciano l'orologio nemmeno attraverso le funzio
 sistema operativo.</p>
 
 <h2>5. Servizi di terze parti</h2>
-<p><strong>Nessuno</strong> che riceva i tuoi dati. L'App usa il componente di localizzazione di
-Google Play Services, che gira sul tuo dispositivo per fornire la posizione GPS; non viene usato per
-inviare dati da nessuna parte. La declinazione magnetica è calcolata offline, da un modello
-incorporato in Android.</p>
+<p><strong>Nessuno</strong> che riceva i tuoi dati. L'App usa due componenti di Google Play Services
+— la localizzazione, per la posizione GPS, e il riconoscimento dell'attività — ed entrambi girano
+sull'orologio. Nessuno dei due viene usato per inviare dati da nessuna parte. La declinazione
+magnetica, e i calcoli di alba, tramonto e luna, sono eseguiti offline da modelli incorporati
+nell'App e in Android.</p>
 
 <h2>6. Permessi</h2>
 <ul>
   <li><code>ACCESS_FINE_LOCATION</code> e <code>ACCESS_COARSE_LOCATION</code> — calibrazione
-      dell'altimetro e bussola sul nord geografico, solo in primo piano. Android impone di
-      richiederli insieme.</li>
+      dell'altimetro, bussola sul nord geografico e orari di sole e luna; solo in primo piano.
+      Android impone di richiederli insieme.</li>
+  <li><code>ACTIVITY_RECOGNITION</code> — distinguere un cambio di quota da un cambio di tempo, così
+      che l'allerta barometrica non scatti a ogni salita.</li>
+  <li><code>POST_NOTIFICATIONS</code> — solo per l'allerta barometrica, che è disattivata di
+      default. Se non la accendi, questo permesso non viene mai richiesto.</li>
 </ul>
+<p>L'App <strong>non</strong> richiede <code>ACCESS_BACKGROUND_LOCATION</code>, e non richiede
+<code>INTERNET</code>.</p>
 <p>I sensori di pressione, magnetometro e accelerometro non richiedono permessi e vengono letti
 direttamente.</p>
 
